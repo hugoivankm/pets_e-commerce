@@ -3,11 +3,9 @@
 from __future__ import annotations
 
 from datetime import datetime
-from decimal import Decimal
 
 from sqlalchemy import DateTime, MetaData, Numeric, func
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
-
 
 NAMING_CONVENTION = {
     "ix": "ix_%(column_0_label)s",
