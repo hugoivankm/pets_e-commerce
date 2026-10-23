@@ -9,7 +9,15 @@ from src.modules.products.models import (
     StockReceiptItem,
     Supplier,
 )
-from src.modules.sales.models import Cart, CartItem, Invoice, Order, OrderItem, Payment, Refund
+from src.modules.sales.models import (
+    Cart,
+    CartItem,
+    Invoice,
+    Order,
+    OrderItem,
+    Payment,
+    Refund,
+)
 from src.modules.users.models import PaymentMethod, User
 
 __all__ = [

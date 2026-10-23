@@ -10,6 +10,7 @@ from src.core.database import Base, UpdatedTimestampMixin
 if TYPE_CHECKING:
     from .stock_receipt import StockReceipt
 
+
 class Supplier(UpdatedTimestampMixin, Base):
     __tablename__ = "suppliers"
     id: Mapped[int] = mapped_column(primary_key=True)

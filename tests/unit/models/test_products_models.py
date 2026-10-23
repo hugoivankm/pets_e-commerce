@@ -30,9 +30,9 @@ def test_product_requires_a_category() -> None:
     category_id = Product.__table__.c.category_id
 
     assert category_id.nullable is False
-    assert {foreign_key.target_fullname for foreign_key in category_id.foreign_keys} == {
-        "categories.id"
-    }
+    assert {
+        foreign_key.target_fullname for foreign_key in category_id.foreign_keys
+    } == {"categories.id"}
 
 
 def test_stock_movements_must_change_stock_by_a_non_zero_amount() -> None:

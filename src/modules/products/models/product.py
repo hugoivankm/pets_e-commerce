@@ -15,13 +15,16 @@ if TYPE_CHECKING:
     from .stock_movement import StockMovement
     from .stock_receipt_item import StockReceiptItem
 
+
 class Product(UpdatedTimestampMixin, Base):
     __tablename__ = "products"
     __table_args__ = (CheckConstraint("price >= 0", name="price_non_negative"),)
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String(255), nullable=False)
     sku: Mapped[str] = mapped_column(String(100), unique=True, nullable=False)
-    category_id: Mapped[int] = mapped_column(ForeignKey("categories.id"), nullable=False, index=True)
+    category_id: Mapped[int] = mapped_column(
+        ForeignKey("categories.id"), nullable=False, index=True
+    )
     description: Mapped[str | None] = mapped_column(Text)
     price: Mapped[Decimal] = mapped_column(MONEY, nullable=False)
     stock: Mapped[int] = mapped_column(Integer, nullable=False, server_default="0")
@@ -29,5 +32,9 @@ class Product(UpdatedTimestampMixin, Base):
     category: Mapped[Category] = relationship(back_populates="products")
     cart_items: Mapped[list[CartItem]] = relationship(back_populates="product")
     order_items: Mapped[list[OrderItem]] = relationship(back_populates="product")
-    stock_movements: Mapped[list[StockMovement]] = relationship(back_populates="product")
-    stock_receipt_items: Mapped[list[StockReceiptItem]] = relationship(back_populates="product")
+    stock_movements: Mapped[list[StockMovement]] = relationship(
+        back_populates="product"
+    )
+    stock_receipt_items: Mapped[list[StockReceiptItem]] = relationship(
+        back_populates="product"
+    )

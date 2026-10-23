@@ -21,7 +21,9 @@ def test_database_url() -> str:
         parsed_url.drivername != "postgresql+psycopg"
         or parsed_url.database != "pets-e-commerce-test"
     ):
-        raise RuntimeError("TEST_DATABASE_URL must point to the PostgreSQL test database")
+        raise RuntimeError(
+            "TEST_DATABASE_URL must point to the PostgreSQL test database"
+        )
 
     return database_url
 
@@ -44,8 +46,7 @@ def test_db_session(test_schema: None, test_engine: Engine) -> Iterator[Session]
         trasanction = connection.begin()
         try:
             with Session(
-                bind=connection,
-                join_transaction_mode="create_savepoint"
+                bind=connection, join_transaction_mode="create_savepoint"
             ) as session:
                 yield session
         finally:

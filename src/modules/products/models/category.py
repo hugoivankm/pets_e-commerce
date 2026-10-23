@@ -10,6 +10,7 @@ from src.core.database import Base, UpdatedTimestampMixin
 if TYPE_CHECKING:
     from .product import Product
 
+
 class Category(UpdatedTimestampMixin, Base):
     __tablename__ = "categories"
     id: Mapped[int] = mapped_column(primary_key=True)
