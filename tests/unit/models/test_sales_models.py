@@ -1,5 +1,3 @@
-"""Schema-level tests for sales models; no database connection is used."""
-
 from src.modules.sales import Cart, CartItem, Invoice, Order, OrderItem, Payment, Refund
 
 

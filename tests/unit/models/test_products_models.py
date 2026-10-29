@@ -1,5 +1,3 @@
-"""Schema-level tests for product and inventory models; no database is used."""
-
 from src.modules.products import (
     Category,
     Product,

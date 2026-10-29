@@ -1,5 +1,3 @@
-"""Schema-level tests for user domain models; no database connection is used."""
-
 from src.modules.users import PaymentMethod, User
 
 

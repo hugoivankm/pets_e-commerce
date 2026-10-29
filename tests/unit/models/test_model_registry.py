@@ -1,9 +1,7 @@
-"""Tests that all model modules register with the shared SQLAlchemy metadata."""
-
 from sqlalchemy.orm import configure_mappers
 
-from src.core import Base
 import src.modules  # noqa: F401 - imports every mapped model for registration
+from src.core import Base
 
 
 def test_all_domain_models_are_registered_in_shared_metadata() -> None:
