@@ -2,9 +2,10 @@ import os
 from typing import Any
 
 from dotenv import load_dotenv
-from flask import Flask, g
+from flask import Flask, g, jsonify
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from werkzeug.exceptions import BadRequest, UnsupportedMediaType
 
 from src.modules.products.routes.product_routes import product_bp
 
@@ -40,5 +41,19 @@ def create_app(config: dict[str, Any] | None = None) -> Flask:
         session = g.pop("db_session", None)
         if session is not None:
             session.close()
+
+    @app.errorhandler(BadRequest)
+    @app.errorhandler(UnsupportedMediaType)
+    def handle_invalid_json_request(error: BadRequest | UnsupportedMediaType):
+        if isinstance(error, BadRequest):
+            return jsonify(
+                {"error": "malformed JSON: Request body contains invalid JSON"}
+            ), 400
+        if isinstance(error, UnsupportedMediaType):
+            return jsonify(
+                {
+                    "error": "incorrect content type: Content-Type must be application/json"
+                }
+            ), 415
 
     return app

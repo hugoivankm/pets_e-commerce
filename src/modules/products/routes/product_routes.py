@@ -32,7 +32,7 @@ def get_product(product_id: int) -> tuple[Response, int]:
     return jsonify(response.model_dump(mode="json")), 200
 
 
-@product_bp.post("")
+@product_bp.post("", strict_slashes=False)
 def create_product() -> tuple[Response, int]:
     session = g.db_session
     repository = SqlAlchemyProductRepository(session)
