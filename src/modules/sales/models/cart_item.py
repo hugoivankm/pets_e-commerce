@@ -1,9 +1,12 @@
 from __future__ import annotations
+
 from decimal import Decimal
 from typing import TYPE_CHECKING
+
 from sqlalchemy import CheckConstraint, ForeignKey, Integer, UniqueConstraint
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from src.core.database import Base, MONEY, TimestampMixin
+
+from src.core.database import MONEY, Base, TimestampMixin
 
 if TYPE_CHECKING:
     from .cart import Cart

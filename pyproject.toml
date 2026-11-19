@@ -10,6 +10,7 @@ requires-python = ">=3.14"
 dependencies = [
     "flask>=3.1.3",
     "psycopg[binary]>=3.3.6",
+    "pydantic>=2,<3",
     "pyjwt>=2.14.0",
     "pytest>=9.1.1",
     "python-dotenv>=1.2.3",
@@ -24,3 +25,8 @@ build-backend = "uv_build"
 [tool.uv.build-backend]
 module-name = "src"
 module-root = ""
+
+[dependency-groups]
+dev = [
+    "ruff>=0.17.4",
+]

@@ -6,7 +6,10 @@ from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 
 from src.modules.products.models import Product
-from src.modules.products.services.product_service import ProductService
+from src.modules.products.services.product_service import (
+    ProductNotFoundError,
+    ProductService,
+)
 
 
 class FakeProductRepository:
@@ -15,6 +18,12 @@ class FakeProductRepository:
 
     def add(self, product: Product) -> None:
         self.products.append(product)
+
+    def get_by_id(self, product_id: int) -> Product | None:
+        for p in self.products:
+            if p.id == product_id:
+                return p
+        return None
 
 
 def test_create_product_stores_product() -> None:
@@ -52,3 +61,31 @@ def test_create_product_rollsback_on_exception() -> None:
         )
 
     session.rollback.assert_called_once_with()
+
+
+def test_get_product_by_id_returns_a_valid_product() -> None:
+    repository = FakeProductRepository()
+    session = MagicMock(spec=Session)
+    service = ProductService(repository=repository, session=session)
+
+    p = Product(
+        id=1,
+        name="Rope toy",
+        sku="ROPE-1",
+        category_id=1,
+        price=Decimal("12.50"),
+    )
+
+    repository.add(p)
+    result = service.get_product(1)
+
+    assert result is p
+
+
+def test_get_product_raises_when_missing() -> None:
+    repository = FakeProductRepository()
+    session = MagicMock(spec=Session)
+    service = ProductService(repository=repository, session=session)
+
+    with pytest.raises(ProductNotFoundError):
+        _ = service.get_product(1)
